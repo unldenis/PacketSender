@@ -38,3 +38,5 @@ PacketSender is an open-source Packet API. It allows to send packets with a simi
       return true;
   }
 ```
+## Credit to
+wiki.vg/Protocol for documentation on the protocol.
