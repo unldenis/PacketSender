@@ -1,6 +1,6 @@
 package com.github.unldenis.packetsender;
 
-import com.cryptomorin.xseries.ReflectionUtils;
+import com.github.unldenis.packetsender.util.ReflectionUtils;
 import com.github.unldenis.packetsender.util.*;
 import org.bukkit.entity.*;
 import org.jetbrains.annotations.*;
@@ -32,11 +32,6 @@ public class WrappedPacket {
         ReflectionUtils.sendPacketSync(player, rawNMSPacket);
     }
 
-    public void write(@NotNull Class<?> type, int index, Object value) {
-        Field field = getField(type, index);
-        UnsafeUtils.setFinal(rawNMSPacket, field, value);
-    }
-
     private Field getField(@NotNull Class<?> type, int index) {
         Field[] fields = field_cache.computeIfAbsent(type, k -> getFields(type));
         if(index >= fields.length) {
@@ -56,6 +51,13 @@ public class WrappedPacket {
         return fields.toArray(new Field[0]);
     }
 
+    public void write(@NotNull Class<?> type, int index, Object value) {
+        Field field = getField(type, index);
+        UnsafeUtils.setFinal(rawNMSPacket, field, value);
+    }
+
+    @ApiStatus.ScheduledForRemoval
+    @Deprecated
     public WrappedPacket write(int index, Object value) {
         UnsafeUtils.setFinal(rawNMSPacket, packetClass.getDeclaredFields()[index], value);
         return this;

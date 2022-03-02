@@ -1,6 +1,6 @@
 package com.github.unldenis.packetsender;
 
-import com.cryptomorin.xseries.*;
+import com.github.unldenis.packetsender.util.*;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -69,5 +69,4 @@ public class WrappedDataWatcherSerializer {
     public Object toNMS() {
         return rawSerializer;
     }
-
 }

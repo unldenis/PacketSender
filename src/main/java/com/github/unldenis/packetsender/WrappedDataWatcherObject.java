@@ -1,6 +1,6 @@
 package com.github.unldenis.packetsender;
 
-import com.cryptomorin.xseries.ReflectionUtils;
+import com.github.unldenis.packetsender.util.ReflectionUtils;
 import org.jetbrains.annotations.*;
 
 

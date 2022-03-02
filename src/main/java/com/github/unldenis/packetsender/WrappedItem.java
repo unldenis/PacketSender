@@ -1,6 +1,6 @@
 package com.github.unldenis.packetsender;
 
-import com.cryptomorin.xseries.*;
+import com.github.unldenis.packetsender.util.*;
 
 public class WrappedItem extends WrappedPacket {
 
