@@ -11,9 +11,10 @@ import java.util.concurrent.*;
 
 public class WrappedPacket {
 
+    private static final Map<Class<?>, Map<Class<?>, Field[]>> FIELD_CACHE = new ConcurrentHashMap<>();
+
     private final Class<?> packetClass;
     private final Object rawNMSPacket;
-    private final Map<Class<?>, Field[]> field_cache = new ConcurrentHashMap<>();
 
     public WrappedPacket(@NotNull Class<?> packetClass) {
         this.packetClass = packetClass;
@@ -33,7 +34,8 @@ public class WrappedPacket {
     }
 
     private Field getField(@NotNull Class<?> type, int index) {
-        Field[] fields = field_cache.computeIfAbsent(type, k -> getFields(type));
+        Map<Class<?>, Field[]> cached = FIELD_CACHE.computeIfAbsent(packetClass, k -> new ConcurrentHashMap<>());
+        Field[] fields = cached.computeIfAbsent(type, this::getFields);
         if(index >= fields.length) {
             throw new IndexOutOfBoundsException(String.format("The index field %d of type %s of class %s does not exist",
                     index, ClassUtils.getSimpleName(type), ClassUtils.getSimpleName(packetClass)));
